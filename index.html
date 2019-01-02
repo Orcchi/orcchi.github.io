@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Калькулятор Золотого сечения от Иваницкого Артема. Сургутская Технологическая школа</title>
+  </head>
+  <body>
+    <fieldset>
+      <legend>Калькулятор Золотого сечения от Иваницкого Артема. Сургутская Технологическая школа</legend>
+      <label for="input">Начальное значение</label>
+      <input id="input" type="number" value="24"></input>
+
+      <br>
+
+      <label for="max">Максимальное значение</label>
+      <input id="max" type="number" value="1200"></input>
+
+      <br>
+
+      <div class="buttons">
+        <button onclick="calculate()">Вычислить до МЗ</button>
+        <button onclick="calculate('rev')">Вычислить до НЧ</button>
+      </div>
+    </fieldset>
+
+    <ul id="output"></ul>
+
+    <!-- Scripts -->
+    <script>
+      var n = 24;
+      var t = 1176;
+      var gr = 1.61803398875;
+
+      function recGolden(x) {
+        if (x > t) {
+          return;
+        }
+
+        printResult(Math.round(x));
+
+        recGolden(x * gr);
+      }
+
+      function recGoldenRev(x) {
+        if (x <= 1) {
+          return;
+        }
+
+        printResult(Math.round(x));
+
+        recGoldenRev(x / gr);
+      }
+
+      function calculate(type) {
+        t = document.getElementById("max").value;
+        list = document.getElementById("output");
+
+        while (list.firstChild) {
+          list.removeChild(list.firstChild);
+        }
+
+        n = document.getElementById('input').value;
+        n = parseInt(n);
+        if (type === 'rev')
+          recGoldenRev(n);
+        else
+          recGolden(n);
+        }
+
+      function printResult(txt) {
+        var node = document.createElement("LI");
+        var textnode = document.createTextNode(txt);
+        node.appendChild(textnode);
+        list.appendChild(node);
+      }
+    </script>
+  </body>
+</html>
